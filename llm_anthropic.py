@@ -1290,6 +1290,7 @@ class _Shared:
 
         web_search_tool_result content is a list of result blocks;
         web_fetch_tool_result content is a single result object.
+        mcp_tool_result content can also be a string.
         """
         content = getattr(block, "content", None)
         if isinstance(content, list):
@@ -1302,6 +1303,8 @@ class _Shared:
             )
         elif content is None:
             result_text = ""
+        elif isinstance(content, str):
+            result_text = json.dumps(content)
         else:
             result_text = json.dumps(
                 content if isinstance(content, dict) else content.model_dump()
